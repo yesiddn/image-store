@@ -1,6 +1,6 @@
 <?php
-
 include_once "../models/usuarioModelo.php";
+include_once "../models/pinturaModelo.php";
 
 class categoriasControl
 {
@@ -36,6 +36,13 @@ class categoriasControl
 
 class pinturaControl
 {
+  public $idCategoria;
+
+  public function ctrListarPintura()
+  {
+    $objRespuesta = pinturaModelo::mdlListarPintura($this->idCategoria);
+    echo json_encode($objRespuesta);
+  }
 }
 
 
@@ -64,4 +71,10 @@ if (isset($_POST['idCategoria'])) {
   $objUsuarios = new categoriasControl();
   $objUsuarios->idCategoria = $_POST["idCategoria"];
   $objUsuarios->ctrEliminarCategoria();
+}
+
+if (isset($_POST["getPictures"])) {
+  $objUsuarios = new pinturaControl();
+  $objUsuarios->idCategoria = $_POST["getPictures"];
+  $objUsuarios->ctrListarPintura();
 }

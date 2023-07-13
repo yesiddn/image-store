@@ -80,8 +80,3 @@ class categoriaModelo
     return $mensaje;
   }
 }
-
-
-class pinturaModelo
-{
-}
