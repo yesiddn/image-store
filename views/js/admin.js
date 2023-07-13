@@ -19,7 +19,6 @@ $(function () {
       tablaPinturas.classList.toggle('d-none');
     }
   });
-
 })
 
 

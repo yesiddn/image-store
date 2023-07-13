@@ -23,6 +23,8 @@
   <link rel='stylesheet' type='text/css' media='screen' href='./views/css/main.css'>
   <script src='./views/js/main.js'></script>
   <script src='./views/js/admin.js'></script>
+  <script src='./views/js/categoria.js'></script>
+  <script src='./views/js/home.js'></script>
   <title>Image Store</title>
 </head>
 
