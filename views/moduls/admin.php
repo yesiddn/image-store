@@ -23,10 +23,13 @@
     </div>
   </div>
 
+  <!-- table pintura -->
   <div class="container d-none" id="tabla-pinturas-container">
     <div class="container mt-3">
-      <h2 class="mb-3" style="font-family: 'Cinzel', serif;">Pinturas</h2>
-      <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#mypintura">Agregar pintura</button>
+      <h2 class="mb-3">Pinturas</h2>
+
+      <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#mypintura" id="btn-agregar-pintura">Agregar pintura</button>
+
       <table id="tablaPinturas" class="table table-striped">
         <thead>
           <tr>
@@ -57,7 +60,7 @@
 
         <!-- Modal body -->
         <div class="modal-body">
-          <form id="formRegistro" action="" method="post" class="needs-validation" novalidate>
+          <form id="form-registro-categoria" action="" method="post" class="needs-validation" novalidate>
             <div class="mb-3 mt-3">
               <label for="nombre" class="form-label">Nombre:</label>
               <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre de la categria" name="nombre" required>
@@ -74,7 +77,6 @@
 </div>
 
 <!-- Modal edit categoria-->
-
 <div class="modal" id="editar">
 
   <div class="modal-dialog">
@@ -97,7 +99,7 @@
             <div class="invalid-feedback">Por favor llene este campo.</div>
           </div>
 
-          <button type="submit" id="btnEditarCategoria" idCategoria="" class="btn btn-primary">Cambiar categoria</button>
+          <button type="submit" id="btnEditarCategoria" idCategoria="" class="btn btn-primary">Editar categoria</button>
         </form>
       </div>
     </div>
@@ -110,17 +112,17 @@
     <div class="modal-content">
 
       <!-- Modal Header -->
-      <div class="modal-header">
+      <div class="modal-header pb-0">
         <h4 class="modal-title">Agregar pintura</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        <form id="formRegistro" action="" method="post" class="needs-validation" novalidate>
+      <div class="modal-body pt-0">
+        <form id="form-agregar-pintura" action="" method="post" class="needs-validation" novalidate>
           <div class="mb-3 mt-3">
-            <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Ingrese " name="nombre" required>
+            <label for="nombre-pintura" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre-pintura" placeholder="Ingrese " name="nombre" required>
             <div class="valid-feedback">Campo válido.</div>
             <div class="invalid-feedback">Por favor llene este campo.</div>
           </div>
@@ -140,11 +142,13 @@
             <label for="descripcion" class="form-label">Descripción:</label>
             <input type="text" class="form-control" id="descripcion" placeholder="Ingrese la descripcion de la pintura" name="descripcion" required>
             <div class="valid-feedback">Campo válido.</div>
-            <div class="invalid-feedback">Por favor llene este campo.</div>categoria
+            <div class="invalid-feedback">Por favor llene este campo.</div>
           </div>
           <div class="mb-3">
             <label for="categoria" class="form-label">Categoria:</label>
-            <input type="text" class="form-control" id="categoria" placeholder="Ingrese la categoria" name="categoria" required>
+            <select class="form-select" id="category" required>
+              <option value="" selected>Choose...</option>
+            </select>
             <div class="valid-feedback">Campo válido.</div>
             <div class="invalid-feedback">Por favor llene este campo.</div>
           </div>
@@ -154,8 +158,69 @@
             <div class="valid-feedback">Campo válido.</div>
             <div class="invalid-feedback">Por favor llene este campo.</div>
           </div>
-          
-          <button type="submit" class="btn btn-primary">Registrar usuario</button>
+
+          <button type="submit" class="btn btn-primary">Registrar pintura</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal edit pintura-->
+<div class="modal" id="editar-pintura">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header pb-0">
+        <h4 class="modal-title">Editar pintura</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body pt-0">
+        <form id="form-editar-pintura" action="" method="post" class="needs-validation" novalidate>
+          <div class="mb-3 mt-3">
+            <label for="nombre-pintura" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="edit-nombre-pintura" placeholder="Ingrese " name="nombre" required>
+            <div class="valid-feedback">Campo válido.</div>
+            <div class="invalid-feedback">Por favor llene este campo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="autor" class="form-label">Autor:</label>
+            <input type="text" class="form-control" id="edit-autor" placeholder="Ingrese el autor" name="autor" required>
+            <div class="valid-feedback">Campo válido.</div>
+            <div class="invalid-feedback">Por favor llene este campo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" class="form-control" id="edit-fecha" placeholder="Ingrese su fecha" name="fecha" required>
+            <div class="valid-feedback">Campo válido.</div>
+            <div class="invalid-feedback">Por favor llene este campo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <input type="text" class="form-control" id="edit-descripcion" placeholder="Ingrese la descripcion de la pintura" name="descripcion" required>
+            <div class="valid-feedback">Campo válido.</div>
+            <div class="invalid-feedback">Por favor llene este campo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria:</label>
+            <select class="form-select" id="edit-category" required>
+              <option value="" selected>Choose...</option>
+            </select>
+            <div class="valid-feedback">Campo válido.</div>
+            <div class="invalid-feedback">Por favor llene este campo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen (tema):</label>
+            <input type="text" class="form-control" id="edit-imagen" placeholder="Ingrese una palabra referente a la imagen" name="imagen" required>
+            <div class="valid-feedback">Campo válido.</div>
+            <div class="invalid-feedback">Por favor llene este campo.</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btnEditarPintura">Editar pintura</button>
         </form>
       </div>
     </div>

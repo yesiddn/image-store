@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2023 a las 05:12:09
+-- Tiempo de generación: 15-07-2023 a las 07:30:04
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -32,14 +32,6 @@ CREATE TABLE `categorias` (
   `nombre` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `categorias`
---
-
-INSERT INTO `categorias` (`id`, `nombre`) VALUES
-(1, 'Paisajes'),
-(2, 'Sky');
-
 -- --------------------------------------------------------
 
 --
@@ -55,15 +47,6 @@ CREATE TABLE `pinturas` (
   `categoria` int(11) NOT NULL,
   `url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `pinturas`
---
-
-INSERT INTO `pinturas` (`id`, `nombre`, `autor`, `fechaPublicacion`, `descripcion`, `categoria`, `url`) VALUES
-(1, 'Nature', 'Yesid', '2023-07-12', 'Esta es mi primer pintura', 1, 'https://source.unsplash.com/640x480/?nature'),
-(2, 'Sea', 'Yesid', '2023-07-12', 'Esta es mi segunda pintura.', 1, 'https://source.unsplash.com/640x480/?sea'),
-(3, 'Night sky', 'Duvan Yesid', '2023-07-12', 'A nocturnal image of the starry sky, where stars shine in a deep black mantle. The crescent moon subtly illuminates the landscape, inviting contemplation of the infinite beauty of the cosmos.', 2, 'https://source.unsplash.com/640x480/?night-sky');
 
 --
 -- Índices para tablas volcadas
@@ -90,23 +73,13 @@ ALTER TABLE `pinturas`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `pinturas`
 --
 ALTER TABLE `pinturas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `pinturas`
---
-ALTER TABLE `pinturas`
-  ADD CONSTRAINT `categoriaPintura` FOREIGN KEY (`categoria`) REFERENCES `categorias` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

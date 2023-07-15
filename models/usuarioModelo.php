@@ -64,7 +64,7 @@ class categoriaModelo
   public static function mdlEliminarCategoria($idCategoria)
   {
     try {
-      $objRespuesta = conexion::conectar()->prepare("DELETE FROM categorias WHERE idCategoria = :idCategoria");
+      $objRespuesta = conexion::conectar()->prepare("DELETE FROM categorias WHERE id = :idCategoria");
 
       $objRespuesta->bindParam(":idCategoria", $idCategoria);
 

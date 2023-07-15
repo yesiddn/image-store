@@ -2,7 +2,7 @@ $(function () {
   // Categoria
   var tabla = null;
   listarCategoria();
-  var forms = document.querySelectorAll('#formRegistro');
+  var forms = document.querySelectorAll('#form-registro-categoria');
 
   // Toma input por input y valida el dato
   Array.prototype.slice.call(forms).forEach(function (form) {
@@ -35,8 +35,8 @@ $(function () {
               // este  captura la respuesta si es positiva
             })
             .then((response) => {
-              listarCategoria();
               alert(response['mensaje']);
+              listarCategoria();
             });
           form.reset();
           $('#mycategoria').modal('toggle');
@@ -124,13 +124,13 @@ $(function () {
       var objBotones = '<div class="btn-group">';
       objBotones +=
         '<button type="button" id="btnEditar" class="btn btn-dark " idCategoria="' +
-        item.idCategoria +
+        item.id +
         '" nombre="' +
         item.nombre +
         '"data-bs-toggle="modal" data-bs-target="#editar"><i class="icofont-edit"></i>              Editar</button>';
       objBotones +=
         '<button type="button" class="btn btn-danger" id="btnEliminar" idCategoria="' +
-        item.idCategoria +
+        item.id +
         '"><i class="icofont-ui-delete"></i>            Eliminar</button>';
       objBotones += '</div>';
       dataSet.push([item.nombre, objBotones]);
@@ -172,4 +172,5 @@ $(function () {
         listarCategoria();
       });
   });
+
 });

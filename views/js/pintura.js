@@ -1,13 +1,10 @@
 $(function () {
   var tabla = null;
-  listarUsuario();
+  lsitarPinturas();
+  var formAgregar = document.querySelectorAll('#form-agregar-pintura');
 
-  // este se usa para encontrar el form por medio del id
-  ('use strict');
-  var forms = document.querySelectorAll('#formRegistro');
-
-  // Toma input por input y valida el dato
-  Array.prototype.slice.call(forms).forEach(function (form) {
+  // agregar pintura
+  Array.prototype.slice.call(formAgregar).forEach(function (form) {
     form.addEventListener(
       'submit',
       function (event) {
@@ -16,26 +13,23 @@ $(function () {
           event.stopPropagation();
           form.classList.add('was-validated');
         } else {
-          // Evita que se recargue el navegador y eso ahce que pueda sacar informacion del formulario
           event.preventDefault();
-
-          var documento = $('#documento').val();
-          var nombres = $('#nombre').val();
-          var apellidos = $('#apellidos').val();
-          var direccion = $('#direccion').val();
-          var telefono = $('#telefono').val();
-          var email =
-            'https://source.unsplash.com/640x480/?running-shoes' +
-            $('#imagen').val();
+          var nombre = $('#nombre-pintura').val();
+          var autor = $('#autor').val();
+          var fecha = $('#fecha').val();
+          var descripcion = $('#descripcion').val();
+          var category = $('#category').val();
+          var imagen =
+            'https://source.unsplash.com/640x480/?' + $('#imagen').val();
 
           //Se crea un objeto que empaqueta la informacion
           var objData = new FormData();
-          objData.append('regDocumento', documento);
-          objData.append('regNombre', nombres);
-          objData.append('regApellido', apellidos);
-          objData.append('regDireccion', direccion);
-          objData.append('regTelefono', telefono);
-          objData.append('regEmail', email);
+          objData.append('regNombrePintura', nombre);
+          objData.append('regAutor', autor);
+          objData.append('regFecha', fecha);
+          objData.append('regDescripcion', descripcion);
+          objData.append('regCategory', category);
+          objData.append('regUrl', imagen);
 
           //este es para el envio de datos
           fetch('control/usuarioControl.php', {
@@ -49,11 +43,12 @@ $(function () {
               // este  captura la respuesta si es positiva
             })
             .then((response) => {
-              listarUsuario();
               alert(response['mensaje']);
+              lsitarPinturas();
             });
+          
           form.reset();
-          $('#myModal').modal('toggle');
+          $('#mypintura').modal('toggle');
           form.classList.delete('was-validated');
         }
       },
@@ -61,67 +56,10 @@ $(function () {
     );
   });
 
-  //editar usuario
-  // este se usa para encontrar el form por medio del id
-
-  var formEditar = document.querySelectorAll('#formEditar');
-
-  // Toma input por input y valida el dato
-  Array.prototype.slice.call(formEditar).forEach(function (form) {
-    form.addEventListener(
-      'submit',
-      function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        } else {
-          // Evita que se recargue el navegador y eso ahce que pueda sacar informacion del formulario
-          event.preventDefault();
-
-          var idPrestamo = $('#btnEditarRegistro').attr('idprestamo');
-          var documento = $('#editdocumento').val();
-          var nombres = $('#editnombre').val();
-          var apellidos = $('#editapellidos').val();
-          var direccion = $('#editdireccion').val();
-          var telefono = $('#edittelefono').val();
-          var email = $('#editemail').val();
-
-          //Se crea un objeto que empaqueta la informacion
-          var objData = new FormData();
-          objData.append('editUsuario', idPrestamo);
-          objData.append('editDocumento', documento);
-          objData.append('editNombre', nombres);
-          objData.append('editApellido', apellidos);
-          objData.append('editDireccion', direccion);
-          objData.append('editTelefono', telefono);
-          objData.append('editEmail', email);
-
-          //este es para el envio de datos
-          fetch('control/usuarioControl.php', {
-            method: 'POST',
-            body: objData,
-            // este es para capturar el error
-          })
-            .then((response) => response.json())
-            .catch((error) => {
-              console.log('error: ', error);
-              // este  captura la respuesta si es positiva
-            })
-            .then((response) => {
-              listarUsuario();
-              alert(response['mensaje']);
-            });
-        }
-      },
-      false
-    );
-  });
-
-  // conexion de la tabla
-  function listarUsuario() {
-    // se crea la peticion para consultar la informacion
+  // listar datos en tabla
+  function lsitarPinturas() {
     var objData = new FormData();
-    objData.append('listarUsuario', 'OK');
+    objData.append('listarPinturas', 'OK');
 
     fetch('control/usuarioControl.php', {
       method: 'POST',
@@ -131,7 +69,6 @@ $(function () {
       .then((response) => response.json())
       .catch((error) => {
         console.log('error: ', error);
-        // este  captura la respuesta si es positiva
       })
       .then((response) => {
         cargarDatos(response);
@@ -144,66 +81,72 @@ $(function () {
     function listarDatos(item, index) {
       var objBotones = '<div class="btn-group">';
       objBotones +=
-        '<button type="button" id="btnEditar" class="btn btn-primary" idprestamo="' +
-        item.idPrestamo +
-        '" documento="' +
-        item.documento +
-        '" nombres="' +
-        item.nombres +
-        '" apellidos="' +
-        item.apellidos +
-        '" direccion="' +
-        item.direccion +
-        '" telefono="' +
-        item.telefono +
-        '" email="' +
-        item.email +
-        '" data-bs-toggle="modal" data-bs-target="#editar">Editar</button>';
+        '<button type="button" id="btnEditar" class="btn btn-dark " idPintura="' +
+        item.id +
+        '" nombre-pintura="' +
+        item.nombre +
+        '" autor="' +
+        item.autor +
+        '" fecha="' +
+        item.fechaPublicacion +
+        '" descripcion="' +
+        item.descripcion +
+        '" categoria="' +
+        item.nombreCategoria +
+        '" url="' +
+        item.url +
+        '" data-bs-toggle="modal" data-bs-target="#editar-pintura"><i class="icofont-edit"></i>              Editar</button>';
       objBotones +=
-        '<button type="button" class="btn btn-danger" id="btnEliminar" idprestamo="' +
-        item.idPrestamo +
-        '">Eliminar</button>';
+        '<button type="button" class="btn btn-danger" id="btnEliminar" idPintura="' +
+        item.id +
+        '"><i class="icofont-ui-delete"></i>            Eliminar</button>';
       objBotones += '</div>';
       dataSet.push([
-        item.documento,
-        item.nombres,
-        item.apellidos,
-        item.direccion,
-        item.telefono,
-        item.email,
+        item.nombre,
+        item.autor,
+        item.fechaPublicacion,
+        item.descripcion,
+        item.nombreCategoria,
+        item.url,
         objBotones,
       ]);
     }
+
     if (tabla != null) {
-      $('#tablaUsuarios').dataTable().fnDestroy();
+      $('#tablaPinturas').dataTable().fnDestroy();
     }
-    tabla = $('#tablaUsuarios').DataTable({
+
+    tabla = $('#tablaPinturas').DataTable({
       data: dataSet,
     });
   }
-  $('#tablaUsuarios').on('click', '#btnEditar', function () {
-    var documento = $(this).attr('documento');
-    $('#editdocumento').val(documento);
-    var nombres = $(this).attr('nombres');
-    $('#editnombre').val(nombres);
-    var apellidos = $(this).attr('apellidos');
-    $('#editapellidos').val(apellidos);
-    var direccion = $(this).attr('direccion');
-    $('#editdireccion').val(direccion);
-    var telefono = $(this).attr('telefono');
-    $('#edittelefono').val(telefono);
-    var email = $(this).attr('email');
-    $('#editemail').val(email);
 
-    var idPrestamo = $(this).attr('idprestamo');
-    $('#btnEditarRegistro').attr('idprestamo', idPrestamo);
+  // editar datos
+  $('#tablaPinturas').on('click', '#btnEditar', function () {
+    var nombre = $(this).attr('nombre-pintura');
+    var autor = $(this).attr('autor');
+    var fecha = $(this).attr('fecha');
+    var descripcion = $(this).attr('descripcion');
+    var categoria = $(this).attr('categoria');
+    var url = $(this).attr('url').slice(37);
+
+    $('#edit-nombre-pintura').val(nombre);
+    $('#edit-autor').val(autor);
+    $('#edit-fecha').val(fecha);
+    $('#edit-descripcion').val(descripcion);
+    $('#edit-categoria').val(categoria);
+    $('#edit-imagen').val(url);
+
+    var idPintura = $(this).attr('idPintura');
+    $('#btnEditarPintura').attr('idPintura', idPintura);
   });
 
-  $('#tablaUsuarios').on('click', '#btnEliminar', function () {
-    var idPrestamo = $(this).attr('idprestamo');
+  // eliminar datos
+  $('#tablaPinturas').on('click', '#btnEliminar', function () {
+    var idPintura = $(this).attr('idPintura');
 
     var objData = new FormData();
-    objData.append('idUsuario', idPrestamo);
+    objData.append('idPintura', idPintura);
 
     fetch('control/usuarioControl.php', {
       method: 'POST',
@@ -217,8 +160,62 @@ $(function () {
       })
       .then((response) => {
         alert(response['mensaje']);
+        lsitarPinturas();
       });
+  });
 
-    listarUsuario();
+  var formEditar = document.querySelectorAll('#form-editar-pintura');
+  Array.prototype.slice.call(formEditar).forEach(function (form) {
+    form.addEventListener(
+      'submit',
+      function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add('was-validated');
+        } else {
+          event.preventDefault();
+          var idPintura = $(this).attr('idPintura');
+          var nombre = $('#edit-nombre-pintura').val();
+          var autor = $('#edit-autor').val();
+          var fecha = $('#edit-fecha').val();
+          var descripcion = $('#edit-descripcion').val();
+          var category = $('#edit-category').val();
+          var imagen =
+            'https://source.unsplash.com/640x480/?' + $('#edit-imagen').val();
+
+          //Se crea un objeto que empaqueta la informacion
+          var objData = new FormData();
+          objData.append('idPintura', idPintura);
+          objData.append('edit-nombre', nombre);
+          objData.append('edit-autor', autor);
+          objData.append('edit-fecha', fecha);
+          objData.append('edit-descripcion', descripcion);
+          objData.append('edit-categoria', category);
+          objData.append('edit-url', imagen);
+
+          //este es para el envio de datos
+          fetch('control/usuarioControl.php', {
+            method: 'POST',
+            body: objData,
+            // este es para capturar el error
+          })
+            .then((response) => response.json())
+            .catch((error) => {
+              console.log('error: ', error);
+              // este  captura la respuesta si es positiva
+            })
+            .then((response) => {
+              alert(response['mensaje']);
+              lsitarPinturas();
+            });
+
+          form.reset();
+          $('#editar-pintura').modal('toggle');
+          form.classList.delete('was-validated');
+        }
+      },
+      false
+    );
   });
 });
